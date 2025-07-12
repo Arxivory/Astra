@@ -18,10 +18,10 @@ float lastY = HEIGHT / 2.0f;
 
 bool firstMouse = true, mousePressed = false;
 
-float cameraYaw = -90.0f, cameraPitch = 0.0f, fov = 45.0f, cameraSpeed = 7000.0f;
+float cameraYaw = -90.0f, cameraPitch = 0.0f, fov = 45.0f, cameraSpeed = 3000.0f;
 
 vec3 cameraPos(0.0f, 0.0f, 80.0f);
-vec3 cameraFront(0.0f, 0.0f, -1.0f);
+vec3 cameraFront(0.0f, 0.0f, -10.0f);
 vec3 cameraUp(0.0f, 1.0f, 0.0f);
 
 float deltaTime = 0.0f, lastFrame = 0.0f;
@@ -152,7 +152,6 @@ int main() {
         mat4 projection = perspective(radians(fov), (float)WIDTH / (float)HEIGHT, 0.1f, 700000.0f);
         mat4 view = lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
 
-        
         planetManager.renderPlanets(view, projection, lightPos, cameraPos, currentFrame, timeFactor);
         starManager.renderStars(view, projection, lightPos, cameraPos, currentFrame, timeFactor);
 
