@@ -17,7 +17,7 @@ public:
 
 	virtual ~CelestialObject() = default;
 
-	void addForce(vec3 &f);
+	void addForce(const vec3 &f);
 
 	void clearForces();
 

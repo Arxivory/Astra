@@ -9,7 +9,7 @@ CelestialObject::CelestialObject(string name, float mass, float radius, vec3 ini
 	velocity(initialVelocity),
 	force(0.0f) { }
 
-void CelestialObject::addForce(vec3& f) {
+void CelestialObject::addForce(const vec3& f) {
 	force += f;
 }
 

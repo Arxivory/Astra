@@ -99,6 +99,9 @@
     <ClCompile Include="CelestialObject.cpp">
       <Filter>Source Files\objectmanagers</Filter>
     </ClCompile>
+    <ClCompile Include="PhysicsEngine.cpp">
+      <Filter>Source Files\physics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="imgui\imconfig.h">
@@ -148,6 +151,9 @@
     </ClInclude>
     <ClInclude Include="CelestialObject.h">
       <Filter>Source Files\objectmanagers</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicsEngine.h">
+      <Filter>Source Files\physics</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
