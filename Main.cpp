@@ -137,7 +137,7 @@ int main() {
     vec3 sunPos(0.0f, 0.0f, 0.0f);
     starManager.addStar("Sun", 274.0f, 28980000.0f, 142984.0f, 100.0f, 5778.0f, sunPos, 0.1f, "textures/sun.jpg");
 
-    float timeFactor = 0.01f;
+    float timeFactor = 3000.0f;
 
     while (!glfwWindowShouldClose(window)) {
         float currentFrame = glfwGetTime();

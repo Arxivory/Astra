@@ -96,6 +96,9 @@
     <ClCompile Include="StarManager.cpp">
       <Filter>Source Files\objectmanagers</Filter>
     </ClCompile>
+    <ClCompile Include="CelestialObject.cpp">
+      <Filter>Source Files\objectmanagers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="imgui\imconfig.h">
@@ -141,6 +144,9 @@
       <Filter>Source Files\objects</Filter>
     </ClInclude>
     <ClInclude Include="StarManager.h">
+      <Filter>Source Files\objectmanagers</Filter>
+    </ClInclude>
+    <ClInclude Include="CelestialObject.h">
       <Filter>Source Files\objectmanagers</Filter>
     </ClInclude>
   </ItemGroup>

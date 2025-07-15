@@ -122,7 +122,7 @@ void Planet::setup(const char *texturePath) {
 }
 
 void Planet::setupPosition() {
-	position = vec3(distance * cos(initialAngle), 0.0f, distance * sin(initialAngle));
+	position = vec3(distance, 0.0f, 0.0f);
 	
 	vec3 direction = position - vec3(0.0f, 0.0f, 0.0f); 
 
