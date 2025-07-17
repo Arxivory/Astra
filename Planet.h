@@ -11,11 +11,12 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include "Loader.h"
+#include "CelestialObject.h"
 
 using namespace std;
 using namespace glm;
 
-class Planet {
+class Planet : public CelestialObject {
 public:
 	Planet(string name, float gravity, float mass, float centralMass, float axialTilt, float distance, float size, float orbitSpeed,
 		float rotationSpeed, float initialAngle);

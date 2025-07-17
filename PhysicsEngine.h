@@ -19,6 +19,8 @@ public:
 	void calculateGravitationalForce(CelestialObject* body1, 
 		CelestialObject* body2);
 
+	
+
 private:
 	vector<CelestialObject*> bodies;
 };
