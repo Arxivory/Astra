@@ -120,9 +120,18 @@ int main() {
 
     vec3 lightPos(0.0f, 0.0f, 0.0f);
 
-    
+    vec3 earthPos(19720.0f, 0.0f, 0.0f);
+    vec3 earthVel(0.0f);
+    simulator.addPlanet("Earth", 9.8f, 597200.0f, 1.0f, 0.0f, earthPos, 63710.0f, earthVel, 0.0f, 0.0f, "textures/earth.jpg");
 
-    float timeFactor = 100.0f;
+    CelestialObject* earth = simulator.getCelestialObject("Earth");
+
+    vec3 moonPos(29720.0f, 0.0f, 0.0f);
+    vec3 moonVel = simulator.calculateOrbitalVelocity(moonPos, earth);
+
+    simulator.addPlanet("Moon", 4.0f, 4972.0f, 1.0f, 0.0f, moonPos, 6361.0f, moonVel, 0.0f, 0.0f, "textures/moon.jpg");
+    
+    float timeFactor = 1.0f;
 
     while (!glfwWindowShouldClose(window)) {
         float currentFrame = glfwGetTime();
@@ -137,6 +146,9 @@ int main() {
         mat4 projection = perspective(radians(fov), (float)WIDTH / (float)HEIGHT, 0.1f, 700000.0f);
         mat4 view = lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
 
+        simulator.update(deltaTime, timeFactor);
+        simulator.render(view, projection, lightPos, cameraPos, timeFactor);
+       
 
         glfwSwapBuffers(window);
         glfwPollEvents();

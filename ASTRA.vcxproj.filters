@@ -87,9 +87,6 @@
     <ClCompile Include="Loader.cpp">
       <Filter>Source Files\utils</Filter>
     </ClCompile>
-    <ClCompile Include="PlanetManager.cpp">
-      <Filter>Source Files\objectmanagers</Filter>
-    </ClCompile>
     <ClCompile Include="Star.cpp">
       <Filter>Source Files\objects</Filter>
     </ClCompile>
@@ -139,9 +136,6 @@
     </ClInclude>
     <ClInclude Include="Loader.h">
       <Filter>Source Files\utils</Filter>
-    </ClInclude>
-    <ClInclude Include="PlanetManager.h">
-      <Filter>Source Files\objectmanagers</Filter>
     </ClInclude>
     <ClInclude Include="Constants.h">
       <Filter>Source Files\utils</Filter>

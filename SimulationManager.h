@@ -6,6 +6,7 @@
 #include "PhysicsEngine.h"
 #include "Planet.h"
 #include <iostream>
+#include <memory>
 #include <vector>
 #include "Constants.h"
 
@@ -15,7 +16,7 @@ private:
 	PhysicsEngine physics;
 
 public:
-	void addPlanet(string name, float gravity, float mass, float centralMass, float axialTilt, float distance, float size, float orbitSpeed,
+	void addPlanet(string name, float gravity, float mass, float centralMass, float axialTilt, vec3& initialPosition, float size, vec3& initialVelocity,
 		float rotationSpeed, float initialAngle, const char* texturePath);
 
 	vec3 calculateOrbitalVelocity(const vec3& position, CelestialObject* centralObject);
@@ -24,7 +25,7 @@ public:
 
 	void render(const mat4& view, const mat4& projection, const vec3& lightPos, const vec3& cameraPos, float timeFactor);
 
-	CelestialObject* getCelestiaObject(const string& name);
+	CelestialObject* getCelestialObject(const string& name);
 
 };
 

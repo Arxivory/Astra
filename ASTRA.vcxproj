@@ -168,7 +168,6 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="PhysicsEngine.cpp" />
     <ClCompile Include="Planet.cpp" />
-    <ClCompile Include="PlanetManager.cpp" />
     <ClCompile Include="Simulation.cpp" />
     <ClCompile Include="SimulationManager.cpp" />
     <ClCompile Include="Star.cpp" />
@@ -189,7 +188,6 @@
     <ClInclude Include="Loader.h" />
     <ClInclude Include="PhysicsEngine.h" />
     <ClInclude Include="Planet.h" />
-    <ClInclude Include="PlanetManager.h" />
     <ClInclude Include="SimulationManager.h" />
     <ClInclude Include="Star.h" />
     <ClInclude Include="StarManager.h" />

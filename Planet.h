@@ -18,7 +18,7 @@ using namespace glm;
 
 class Planet : public CelestialObject {
 public:
-	Planet(string name, float gravity, float mass, float centralMass, float axialTilt, float distance, float size, float orbitSpeed,
+	Planet(string name, float gravity, float mass, float centralMass, float axialTilt, vec3& initialPosition, float size, vec3& initialVelocity,
 		float rotationSpeed, float initialAngle);
 
 	void generateSphereMesh();
@@ -32,19 +32,11 @@ public:
 	void render(float currentFrame, float timeFactor, const mat4& view, 
 		const mat4& projection, const vec3& lightPos, const vec3& cameraPos);
 
-	string getName() { return name; }
-
-	vec3 getPosition() { return position; }
 	float getSize() { return size; }
 	float getMass() { return mass; }
 
 private:
-	vec3 position;
-	vec3 velocity;
-	vec3 acceleration;
-	vec3 force;
-
-	string name;
+	
 	float gravity;
 	float mass;
 	float centralMass;

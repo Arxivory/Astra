@@ -1,7 +1,7 @@
 #include "CelestialObject.h"
 
-CelestialObject::CelestialObject(string name, float mass, float radius, vec3 initialPosition, 
-	vec3 initialVelocity) :
+CelestialObject::CelestialObject(string name, float mass, float radius, vec3 &initialPosition, 
+	vec3 &initialVelocity) :
 	name(name),
 	mass(mass),
 	radius(radius),

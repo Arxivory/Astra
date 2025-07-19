@@ -3,9 +3,8 @@
 using namespace std;
 
 
-Planet::Planet(string name, float gravity, float mass, float centralMass, float axialTilt, float distance, float size,
-	float orbitSpeed, float rotationSpeed, float initialAngle) : CelestialObject(name, mass, size, vec3(distance, 0.0f, 0.0f), vec3(0.0f)),
-	name(name),
+Planet::Planet(string name, float gravity, float mass, float centralMass, float axialTilt, vec3& initialPosition, float size,
+	vec3& initialVelocity, float rotationSpeed, float initialAngle) : CelestialObject(name, mass, size, initialPosition, initialVelocity),
 	gravity(gravity),
 	mass(mass* SCALE_FACTOR),
 	centralMass(centralMass * SCALE_FACTOR),
