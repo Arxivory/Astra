@@ -16,13 +16,13 @@ private:
 
 public:
 	void addPlanet(string name, float gravity, float mass, float centralMass, float axialTilt, float distance, float size, float orbitSpeed,
-		float rotationSpeed, float initialAngle);
+		float rotationSpeed, float initialAngle, const char* texturePath);
 
 	vec3 calculateOrbitalVelocity(const vec3& position, CelestialObject* centralObject);
 
 	void update(float deltaTime, float timeFactor);
 
-	void render(const mat4& view, const mat4& projection, const vec3& lightPos, const vec3& cameraPos);
+	void render(const mat4& view, const mat4& projection, const vec3& lightPos, const vec3& cameraPos, float timeFactor);
 
 	CelestialObject* getCelestiaObject(const string& name);
 

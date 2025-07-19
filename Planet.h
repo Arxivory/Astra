@@ -37,9 +37,6 @@ public:
 	vec3 getPosition() { return position; }
 	float getSize() { return size; }
 	float getMass() { return mass; }
-	void addForce(vec3 force) { this->force += force; }
-	void updatePhysics(float deltaTime);
-	void clearForces() { this->force = vec3(0.0f); }
 
 private:
 	vec3 position;
@@ -64,7 +61,6 @@ private:
 	GLuint shaderProgram;
 	Loader loader;
 
-	void setupPosition();
 };
 
 #endif // !PLANET_H

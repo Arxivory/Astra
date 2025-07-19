@@ -118,26 +118,6 @@ void Planet::setup(const char *texturePath) {
 	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
 	glEnableVertexAttribArray(1);
 
-	setupPosition();
-}
-
-void Planet::setupPosition() {
-	position = vec3(distance, 0.0f, 0.0f);
-	
-	vec3 direction = position - vec3(0.0f, 0.0f, 0.0f); 
-
-	float distanceCopy = length(direction);
-
-	float orbitalSpeed = sqrt((G * centralMass) / distanceCopy);
-	vec3 orbitDir = normalize(cross(vec3(0.0f, 1.0f, 0.0f), direction));
-	velocity = orbitDir * orbitalSpeed;
-}
-
-void Planet::updatePhysics(float deltaTime) {
-	vec3 acceleration = force / mass;
-
-	velocity += acceleration * deltaTime;
-	position += velocity * deltaTime;
 }
 
 void Planet::render(float currentFrame, float timeFactor, const mat4& view,

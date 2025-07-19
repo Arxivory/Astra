@@ -1,8 +1,10 @@
 #include "SimulationManager.h"
 
 void SimulationManager::addPlanet(string name, float gravity, float mass, float centralMass, float axialTilt, float distance, float size, float orbitSpeed,
-float rotationSpeed, float initialAngle) {
+float rotationSpeed, float initialAngle, const char* texturePath) {
 	auto planet = make_unique<Planet>(name, gravity, mass, centralMass, axialTilt, distance, size, orbitSpeed, rotationSpeed, initialAngle);
+	planet->init();
+	planet->setup(texturePath);
 	physics.addBody(planet.get());
 	celestialObjects.push_back(move(planet));
 }
@@ -21,9 +23,9 @@ void SimulationManager::update(float deltaTime, float timeFactor) {
 	physics.update(deltaTime * timeFactor);
 }
 
-void SimulationManager::render(const mat4& view, const mat4& projection, const vec3& lightPos, const vec3& cameraPos) {
+void SimulationManager::render(const mat4& view, const mat4& projection, const vec3& lightPos, const vec3& cameraPos, float timeFactor) {
 	for (auto& celestialObject : celestialObjects)
-		celestialObject->render(0.0f, 0.0f, view, projection, lightPos, cameraPos);
+		celestialObject->render(0.0f, timeFactor, view, projection, lightPos, cameraPos);
 }
 
 CelestialObject* SimulationManager::getCelestiaObject(const string& name) {

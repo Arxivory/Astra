@@ -4,8 +4,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
-#include "PlanetManager.h"
-#include "StarManager.h"
+#include "SimulationManager.h"
 
 using namespace std;
 using namespace glm;
@@ -26,8 +25,7 @@ vec3 cameraUp(0.0f, 1.0f, 0.0f);
 
 float deltaTime = 0.0f, lastFrame = 0.0f;
 
-StarManager starManager;
-PlanetManager planetManager;
+SimulationManager simulator;
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
     WIDTH = width;
@@ -122,22 +120,9 @@ int main() {
 
     vec3 lightPos(0.0f, 0.0f, 0.0f);
 
-	float sunMass = 1989300.0f; // test random values
     
-    planetManager.addPlanet("Mercury", 3.7f, 33000.0f, sunMass, 0.0f, 570000.0f, 4879.0f, 0.1f, 0.2f, 9.0f, "textures/mercury.jpg");
-    planetManager.addPlanet("Venus", 8.9f, 4870000.0f, sunMass, 0.0f, 1080000.0f, 12104.0f, 0.1f, 0.2f, 6.0f, "textures/venus.jpg");
-    planetManager.addPlanet("Earth", 9.8f, 5970000.0f, sunMass, 0.0f, 1490000.0f, 12756.0f, 0.1f, 0.4f, 0.0f, "textures/earth.jpg");
-    planetManager.addPlanet("Mars", 3.7f, 642000.0f, sunMass, 0.0f, 2280000.0f, 6792.0f, 0.1f, 0.1f, 3.0f, "textures/mars.jpg");
-    planetManager.addPlanet("Jupiter", 23.1f, 18980000.0f, sunMass, 0.0f, 7780000.0f, 142984.0f, 0.1f, 0.1f, 17.0f, "textures/jupiter.jpg");
-    planetManager.addPlanet("Saturn", 23.1f, 5680000.0f, sunMass, 0.0f, 14320000.0f, 120536.0f, 0.1f, 0.1f, 2.0f, "textures/saturn.jpg");
-    planetManager.addPlanet("Uranus", 23.1f, 8680000.0f, sunMass, 0.0f, 28670000.0f, 51118.0f, 0.1f, 0.1f, 20.0f, "textures/uranus.jpg");
-    planetManager.addPlanet("Neptune", 23.1f, 1020000.0f, sunMass, 0.0f, 45150000.0f, 49528.0f, 0.1f, 0.1f, 30.0f, "textures/neptune.jpg");
-    planetManager.addPlanet("Sun", 274.0f, 33000.0f, sunMass, 0.0f, 0.1f, 1284.0f, 0.0f, 0.0f, 0.0f, "textures/sun.jpg");
 
-    vec3 sunPos(0.0f, 0.0f, 0.0f);
-    starManager.addStar("Sun", 274.0f, 28980000.0f, 142984.0f, 100.0f, 5778.0f, sunPos, 0.1f, "textures/sun.jpg");
-
-    float timeFactor = 3000.0f;
+    float timeFactor = 100.0f;
 
     while (!glfwWindowShouldClose(window)) {
         float currentFrame = glfwGetTime();
@@ -152,8 +137,6 @@ int main() {
         mat4 projection = perspective(radians(fov), (float)WIDTH / (float)HEIGHT, 0.1f, 700000.0f);
         mat4 view = lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
 
-        planetManager.renderPlanets(view, projection, lightPos, cameraPos, currentFrame, timeFactor);
-        starManager.renderStars(view, projection, lightPos, cameraPos, currentFrame, timeFactor);
 
         glfwSwapBuffers(window);
         glfwPollEvents();
