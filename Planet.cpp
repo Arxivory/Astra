@@ -14,7 +14,8 @@ Planet::Planet(string name, float gravity, float mass, float centralMass, float 
 	orbitSpeed(orbitSpeed),
 	rotationSpeed(rotationSpeed),
 	initialAngle(initialAngle),
-	VAO(0), VBO(0), EBO(0), textureId(0) { }
+	VAO(0), VBO(0), EBO(0), textureId(0)  { }
+
 
 void Planet::setupShaderProgram() {
 	shaderProgram = loader.createShaderProgram("shaders/vertex/PlanetVertexShader.glsl", "shaders/fragment/PlanetFragmentShader.glsl");
@@ -30,6 +31,8 @@ void Planet::setupShaderProgram() {
 void Planet::init() {
 	setupShaderProgram();
 	generateSphereMesh();
+	setupTrajectoryShaders();
+	setupTrajectoryBuffers();
 }
 
 void Planet::generateSphereMesh() {
@@ -118,6 +121,8 @@ void Planet::setup(const char *texturePath) {
 	glEnableVertexAttribArray(1);
 
 }
+
+
 
 void Planet::render(float currentFrame, float timeFactor, const mat4& view,
 	const mat4& projection, const vec3& lightPos, const vec3& cameraPos) {

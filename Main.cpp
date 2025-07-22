@@ -120,9 +120,15 @@ int main() {
 
     vec3 lightPos(0.0f, 0.0f, 0.0f);
 
+    vec3 sunPos(0.0f);
+    vec3 sunVel(0.0f);
+    simulator.addPlanet("SampleSun", 234.0f, 19890000000.0f, 1.0f, 0.0f, sunPos, 6960.0f, sunVel, 0.0f, 0.0f, "textures/sun.jpg");
+
+    CelestialObject* sun = simulator.getCelestialObject("SampleSun");
+
     vec3 earthPos(19720.0f, 0.0f, 0.0f);
-    vec3 earthVel(0.0f);
-    simulator.addPlanet("Earth", 9.8f, 597200.0f, 1.0f, 0.0f, earthPos, 63710.0f, earthVel, 0.0f, 0.0f, "textures/earth.jpg");
+    vec3 earthVel = simulator.calculateOrbitalVelocity(earthPos, sun);
+    simulator.addPlanet("Earth", 9.8f, 597200000.0f, 1.0f, 0.0f, earthPos, 63710.0f, earthVel, 0.0f, 0.0f, "textures/earth.jpg");
 
     CelestialObject* earth = simulator.getCelestialObject("Earth");
 
@@ -131,7 +137,7 @@ int main() {
 
     simulator.addPlanet("Moon", 4.0f, 4972.0f, 1.0f, 0.0f, moonPos, 6361.0f, moonVel, 0.0f, 0.0f, "textures/moon.jpg");
     
-    float timeFactor = 1.0f;
+    float timeFactor = 100000.0f;
 
     while (!glfwWindowShouldClose(window)) {
         float currentFrame = glfwGetTime();

@@ -3,9 +3,13 @@
 #define CELESTIALOBJECT_H
 
 #include <iostream>
+#include <vector>
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include <limits>
 
 using namespace std;
 using namespace glm;
@@ -40,6 +44,9 @@ public:
 	virtual void render(float currentFrame, float timeFactor, const mat4& view,
 		const mat4& projection, const vec3& lightPos, const vec3& cameraPos) = 0;
 
+	void updateTrajectory();
+	void renderTrajectory(const mat4& view, const mat4& projection);
+
 protected:
 	string name;
 	float mass;
@@ -48,6 +55,15 @@ protected:
 	vec3 position;
 	vec3 velocity;
 	vec3 force;
+
+	vector<vec3> trajectoryPoints;
+	GLuint trajectoryVAO, trajectoryVBO;
+	GLuint trajectoryShaderProgram;
+	int maxTrajectoryPoints;
+
+	void setupTrajectoryShaders();
+	void setupTrajectoryBuffers();
+	
 };
 
 #endif // !CELESTIALOBJECT_H

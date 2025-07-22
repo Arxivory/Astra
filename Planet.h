@@ -52,6 +52,7 @@ private:
 	GLuint VBO, VAO, EBO;
 	GLuint shaderProgram;
 	Loader loader;
+	
 
 };
 
