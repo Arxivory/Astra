@@ -4,7 +4,7 @@ using namespace std;
 
 
 Planet::Planet(string name, float gravity, float mass, float centralMass, float axialTilt, vec3& initialPosition, float size,
-	vec3& initialVelocity, float rotationSpeed, float initialAngle) : CelestialObject(name, mass, size, initialPosition, initialVelocity),
+	vec3& initialVelocity, float rotationSpeed, float initialAngle) : CelestialObject(name, mass, size * SCALE_FACTOR, initialPosition, initialVelocity),
 	gravity(gravity),
 	mass(mass* SCALE_FACTOR),
 	centralMass(centralMass * SCALE_FACTOR),
@@ -135,7 +135,7 @@ void Planet::render(float currentFrame, float timeFactor, const mat4& view,
 
 	model = translate(model, position);
 	model = rotate(model, radians(axialTilt), vec3(1.0f, 0.0f, 0.0f));
-	model = scale(model, vec3(size));
+	model = scale(model, vec3(radius));
 
 
 	glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "model"), 1, GL_FALSE, value_ptr(model));

@@ -13,7 +13,7 @@ vec3 SimulationManager::calculateOrbitalVelocity(const vec3& position, Celestial
 	vec3 direction = position - centralObject->getPosition();
 	float distance = length(direction);
 
-	float orbitalSpeed = sqrt((G * centralObject->getMass()) / distance);
+	float orbitalSpeed = sqrt((G_NORMALIZED * centralObject->getMass()) / distance);
 
 	vec3 orbitDirection = normalize(cross(vec3(0.0f, 1.0f, 0.0f), direction));
 	return orbitDirection * orbitalSpeed;

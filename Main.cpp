@@ -122,22 +122,22 @@ int main() {
 
     vec3 sunPos(0.0f);
     vec3 sunVel(0.0f);
-    simulator.addPlanet("SampleSun", 234.0f, 19890000000.0f, 1.0f, 0.0f, sunPos, 6960.0f, sunVel, 0.0f, 0.0f, "textures/sun.jpg");
+    simulator.addPlanet("SampleSun", 234.0f, 19890000000.0f, 1.0f, 0.0f, sunPos, 99600.0f, sunVel, 0.0f, 0.0f, "textures/sun.jpg");
 
     CelestialObject* sun = simulator.getCelestialObject("SampleSun");
 
-    vec3 earthPos(19720.0f, 0.0f, 0.0f);
+    vec3 earthPos(39720.0f, 0.0f, 0.0f);
     vec3 earthVel = simulator.calculateOrbitalVelocity(earthPos, sun);
     simulator.addPlanet("Earth", 9.8f, 597200000.0f, 1.0f, 0.0f, earthPos, 63710.0f, earthVel, 0.0f, 0.0f, "textures/earth.jpg");
 
     CelestialObject* earth = simulator.getCelestialObject("Earth");
 
-    vec3 moonPos(29720.0f, 0.0f, 0.0f);
-    vec3 moonVel = simulator.calculateOrbitalVelocity(moonPos, earth);
+    vec3 venusPos(49720.0f, 0.0f, 0.0f);
+    vec3 venusVel = simulator.calculateOrbitalVelocity(venusPos, earth);
 
-    simulator.addPlanet("Moon", 4.0f, 4972.0f, 1.0f, 0.0f, moonPos, 6361.0f, moonVel, 0.0f, 0.0f, "textures/moon.jpg");
+    simulator.addPlanet("Venus", 4.0f, 4972.0f, 1.0f, 0.0f, venusPos, 60510.0f, venusVel, 0.0f, 0.0f, "textures/venus.jpg");
     
-    float timeFactor = 100000.0f;
+    float timeFactor = 1.0f;
 
     while (!glfwWindowShouldClose(window)) {
         float currentFrame = glfwGetTime();

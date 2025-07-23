@@ -18,7 +18,8 @@ public:
 
 	void calculateGravitationalForce(CelestialObject* body1, 
 		CelestialObject* body2);
-
+	
+	void handleCollisions(CelestialObject* body1, CelestialObject* body2);
 	
 
 private:
