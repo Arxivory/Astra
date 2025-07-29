@@ -90,9 +90,6 @@
     <ClCompile Include="Star.cpp">
       <Filter>Source Files\objects</Filter>
     </ClCompile>
-    <ClCompile Include="StarManager.cpp">
-      <Filter>Source Files\objectmanagers</Filter>
-    </ClCompile>
     <ClCompile Include="PhysicsEngine.cpp">
       <Filter>Source Files\physics</Filter>
     </ClCompile>
@@ -142,9 +139,6 @@
     </ClInclude>
     <ClInclude Include="Star.h">
       <Filter>Source Files\objects</Filter>
-    </ClInclude>
-    <ClInclude Include="StarManager.h">
-      <Filter>Source Files\objectmanagers</Filter>
     </ClInclude>
     <ClInclude Include="PhysicsEngine.h">
       <Filter>Source Files\physics</Filter>

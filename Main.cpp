@@ -122,7 +122,7 @@ int main() {
 
     vec3 sunPos(0.0f);
     vec3 sunVel(0.0f);
-    simulator.addPlanet("SampleSun", 234.0f, 19890000000.0f, 1.0f, 0.0f, sunPos, 99600.0f, sunVel, 0.0f, 0.0f, "textures/sun.jpg");
+	simulator.addStar("SampleSun", 234.0f, 19890000000.0f, 120600.0f, 100000.0f, 6000.0f, sunPos, sunVel, 0.0f, "textures/sun.jpg");
 
     CelestialObject* sun = simulator.getCelestialObject("SampleSun");
 

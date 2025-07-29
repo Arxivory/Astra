@@ -171,7 +171,6 @@
     <ClCompile Include="Simulation.cpp" />
     <ClCompile Include="SimulationManager.cpp" />
     <ClCompile Include="Star.cpp" />
-    <ClCompile Include="StarManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CelestialObject.h" />
@@ -190,7 +189,6 @@
     <ClInclude Include="Planet.h" />
     <ClInclude Include="SimulationManager.h" />
     <ClInclude Include="Star.h" />
-    <ClInclude Include="StarManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

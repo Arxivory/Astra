@@ -1,14 +1,12 @@
 #include "Star.h"
 
 Star::Star(string name, float gravity, float mass, float size, float luminosity, float temperature,
-	vec3& position, float rotationSpeed) :
+	vec3& position, vec3& initialVel, float rotationSpeed) : CelestialObject(name, mass, size * SCALE_FACTOR, position, initialVel),
 	name(name),
 	gravity(gravity),
 	mass(mass),
-	size(size * SCALE_FACTOR),
 	luminosity(luminosity),
 	temperature(temperature),
-	position(position),
 	rotationSpeed(rotationSpeed),
 	VAO(0), VBO(0), EBO(0), textureId(0) { }
 
@@ -127,7 +125,7 @@ void Star::render(float currentFrame, float timeFactor, const mat4& view,
 	float angle = angularVelocity * currentFrame * timeFactor;
 	model = translate(model, position);
 	model = rotate(model, angle, vec3(0.0f, 1.0f, 0.0f));
-	model = scale(model, vec3(size));
+	model = scale(model, vec3(radius));
 
 	glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "model"), 1, GL_FALSE, value_ptr(model));
 
@@ -137,7 +135,7 @@ void Star::render(float currentFrame, float timeFactor, const mat4& view,
 
 	glUniform1f(glGetUniformLocation(shaderProgram, "luminosity"), luminosity);
 	glUniform1f(glGetUniformLocation(shaderProgram, "temperature"), temperature);
-	glUniform1f(glGetUniformLocation(shaderProgram, "size"), size);
+	glUniform1f(glGetUniformLocation(shaderProgram, "size"), radius);
 	glUniform1i(glGetUniformLocation(shaderProgram, "starTexture"), 0);
 
 	glBindTexture(GL_TEXTURE_2D, textureId);

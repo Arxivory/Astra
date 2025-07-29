@@ -12,14 +12,15 @@
 #include <glm/gtc/type_ptr.hpp>
 #include "Loader.h"
 #include "Constants.h"
+#include "CelestialObject.h"
 
 using namespace std;
 using namespace glm;
 
-class Star {
+class Star : public CelestialObject {
 public:
 	Star(string name, float gravity, float mass, float size, float luminosity, float temperature,
-		vec3& position, float rotationSpeed);
+		vec3& position, vec3& initialVel, float rotationSpeed);
 
 	void generateSphereMesh();
 
@@ -40,7 +41,6 @@ private:
 	float size;
 	float luminosity;
 	float temperature;
-	vec3 position;
 	float rotationSpeed;
 	GLuint textureId;
 	vector<float> vertices;

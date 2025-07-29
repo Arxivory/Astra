@@ -8,7 +8,7 @@ CelestialObject::CelestialObject(string name, float mass, float radius, vec3 &in
 	position(initialPosition),
 	velocity(initialVelocity),
 	force(0.0f),
-	maxTrajectoryPoints(INT16_MAX) { }
+	maxTrajectoryPoints(INT32_MAX) { }
 
 void CelestialObject::addForce(const vec3& f) {
 	force += f;

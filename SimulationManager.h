@@ -5,6 +5,7 @@
 #include "CelestialObject.h"
 #include "PhysicsEngine.h"
 #include "Planet.h"
+#include "Star.h"
 #include <iostream>
 #include <memory>
 #include <vector>
@@ -18,6 +19,9 @@ private:
 public:
 	void addPlanet(string name, float gravity, float mass, float centralMass, float axialTilt, vec3& initialPosition, float size, vec3& initialVelocity,
 		float rotationSpeed, float initialAngle, const char* texturePath);
+
+	void addStar(string name, float gravity, float mass, float size, float luminosity, float temperature,
+		vec3& position, vec3& initialVel, float rotationSpeed, const char* texturePath);
 
 	vec3 calculateOrbitalVelocity(const vec3& position, CelestialObject* centralObject);
 
