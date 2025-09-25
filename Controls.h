@@ -34,6 +34,7 @@ public:
     unsigned int getWidth() const { return WIDTH; }
     unsigned int getHeight() const { return HEIGHT; }
 	float getDeltaTime() const { return deltaTime; }
+    float cameraSpeed = 3000.0f;
 
 private:
     // Instance methods called by static trampolines
@@ -43,7 +44,7 @@ private:
 
     // Camera and input state
     bool firstMouse = true, mousePressed = false;
-    float cameraYaw = -90.0f, cameraPitch = 0.0f, fov = 45.0f, cameraSpeed = 3000.0f;
+    float cameraYaw = -90.0f, cameraPitch = 0.0f, fov = 45.0f;
     vec3 cameraPos = vec3(0.0f, 0.0f, 80.0f);
     vec3 cameraFront = vec3(0.0f, 0.0f, -10.0f);
     vec3 cameraUp = vec3(0.0f, 1.0f, 0.0f);
