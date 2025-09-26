@@ -36,7 +36,7 @@ void Planet::init() {
 }
 
 void Planet::generateSphereMesh() {
-	int sectorCount = 64, stackCount = sectorCount;
+	int sectorCount = 128, stackCount = sectorCount;
 
 	const float PI = 3.14159265359f;
 	vertices.clear();

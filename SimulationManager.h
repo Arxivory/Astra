@@ -15,6 +15,7 @@ class SimulationManager {
 private:
 	vector<unique_ptr<CelestialObject>> celestialObjects;
 	PhysicsEngine physics;
+	bool trajectoryVisible = false;
 
 public:
 	void addPlanet(string name, float gravity, float mass, float centralMass, float axialTilt, vec3& initialPosition, float size, vec3& initialVelocity,
@@ -30,6 +31,8 @@ public:
 	void render(const mat4& view, const mat4& projection, const vec3& lightPos, const vec3& cameraPos, float timeFactor);
 
 	CelestialObject* getCelestialObject(const string& name);
+
+	void toggleTrajectory() { trajectoryVisible = !trajectoryVisible; }
 
 };
 

@@ -34,9 +34,12 @@ void SimulationManager::update(float deltaTime, float timeFactor) {
 
 void SimulationManager::render(const mat4& view, const mat4& projection, const vec3& lightPos, const vec3& cameraPos, float timeFactor) {
 	for (auto& celestialObject : celestialObjects) {
-		celestialObject->updateTrajectory();
+		if (trajectoryVisible) {
+			celestialObject->updateTrajectory();
+			celestialObject->renderTrajectory(view, projection);
+		}
 		celestialObject->render(0.0f, timeFactor, view, projection, lightPos, cameraPos);
-		celestialObject->renderTrajectory(view, projection);
+		
 	}
 }
 

@@ -113,7 +113,6 @@ int main() {
         simulator.update(controls.getDeltaTime(), timeFactor);
         simulator.render(view, projection, lightPos, controls.getCameraPos(), timeFactor);
 
-        // --- ImGui controls --- for simulation only (not final)
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
@@ -121,17 +120,19 @@ int main() {
         ImGui::Begin("Simulation Controls");
         ImGui::SliderFloat("Time Factor", &timeFactor, 0.00000001f, 1.0f, "%.6f");
         ImGui::SliderFloat("Camera Speed", &controls.cameraSpeed, 1.0f, 4000.0f, "%.1f");
+		ImGui::Button("Toggle Trajectory");
+		if (ImGui::IsItemClicked()) {
+			simulator.toggleTrajectory();
+		}
         ImGui::End();
 
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-        // --- End ImGui controls ---
 
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
 
-    // ImGui shutdown
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplGlfw_Shutdown();
     ImGui::DestroyContext();
