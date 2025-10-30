@@ -27,7 +27,7 @@ public:
 
 	void init();
 
-	void setup(const char *texturePath);
+	void setup(const char *texturePath, const char* normalPath);
 
 	void render(float currentFrame, float timeFactor, const mat4& view, 
 		const mat4& projection, const vec3& lightPos, const vec3& cameraPos);
@@ -46,7 +46,7 @@ private:
 	float orbitSpeed;
 	float rotationSpeed;
 	float initialAngle;
-	GLuint textureId;
+	GLuint textureId, normalMapId;
 	vector<float> vertices;
 	vector<unsigned int> indices;
 	GLuint VBO, VAO, EBO;

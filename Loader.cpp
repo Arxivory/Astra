@@ -37,26 +37,41 @@ GLuint Loader::createShaderProgram(const char *vertShader, const char *fragShade
 	return shaderProgram;
 }
 
-GLuint Loader::loadTexture(const char *path) {
-	int width, height, nrChannels;
-	stbi_set_flip_vertically_on_load(true);
-	unsigned char* data = stbi_load(path, &width, &height, &nrChannels, 0);
+GLuint Loader::loadTexture(const char* path, bool gammaCorrect)
+{
+    int width, height, nrChannels;
+    stbi_set_flip_vertically_on_load(true);
+    unsigned char* data = stbi_load(path, &width, &height, &nrChannels, 0);
 
-	if (!data) {
-		cerr << "Failed to load Texture: " << path << endl;
-		return -1;
-	}
+    if (!data) {
+        cerr << "Failed to load Texture: " << path << endl;
+        return 0;
+    }
 
-	GLuint texture;
-	glGenTextures(1, &texture);
-	glBindTexture(GL_TEXTURE_2D, texture);
-	glTexImage2D(GL_TEXTURE_2D, 0, nrChannels == 4 ? GL_RGBA : GL_RGB, width, height, 0,
-		nrChannels == 4 ? GL_RGBA : GL_RGB, GL_UNSIGNED_BYTE, data);
-	glGenerateMipmap(GL_TEXTURE_2D);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	stbi_image_free(data);
-	return texture;
+    GLenum internalFormat, dataFormat;
+    if (nrChannels == 1) {
+        internalFormat = dataFormat = GL_RED;
+    }
+    else if (nrChannels == 3) {
+        internalFormat = gammaCorrect ? GL_SRGB : GL_RGB;
+        dataFormat = GL_RGB;
+    }
+    else if (nrChannels == 4) {
+        internalFormat = gammaCorrect ? GL_SRGB_ALPHA : GL_RGBA;
+        dataFormat = GL_RGBA;
+    }
+
+    GLuint texture;
+    glGenTextures(1, &texture);
+    glBindTexture(GL_TEXTURE_2D, texture);
+    glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, width, height, 0, dataFormat, GL_UNSIGNED_BYTE, data);
+    glGenerateMipmap(GL_TEXTURE_2D);
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+    stbi_image_free(data);
+    return texture;
 }

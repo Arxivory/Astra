@@ -1,10 +1,10 @@
 #include "SimulationManager.h"
 
 void SimulationManager::addPlanet(string name, float gravity, float mass, float centralMass, float axialTilt, vec3& initialPosition, float size, vec3& initialVelocity,
-	float rotationSpeed, float initialAngle, const char* texturePath) {
+	float rotationSpeed, float initialAngle, const char* texturePath, const char* normalPath) {
 	auto planet = make_unique<Planet>(name, gravity, mass, centralMass, axialTilt, initialPosition, size, initialVelocity, rotationSpeed, initialAngle);
 	planet->init();
-	planet->setup(texturePath);
+	planet->setup(texturePath, normalPath);
 	physics.addBody(planet.get());
 	celestialObjects.push_back(move(planet));
 }

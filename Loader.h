@@ -18,7 +18,7 @@ public:
 
 	GLuint createShaderProgram(const char* vertPath, const char* fragPath);
 
-	GLuint loadTexture(const char* path);
+	GLuint loadTexture(const char* path, bool gammaCorrect);
 
 private:
 

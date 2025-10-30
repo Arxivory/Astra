@@ -19,7 +19,7 @@ private:
 
 public:
 	void addPlanet(string name, float gravity, float mass, float centralMass, float axialTilt, vec3& initialPosition, float size, vec3& initialVelocity,
-		float rotationSpeed, float initialAngle, const char* texturePath);
+		float rotationSpeed, float initialAngle, const char* texturePath, const char* normalPath);
 
 	void addStar(string name, float gravity, float mass, float size, float luminosity, float temperature,
 		vec3& position, vec3& initialVel, float rotationSpeed, const char* texturePath);

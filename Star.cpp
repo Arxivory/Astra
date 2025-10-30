@@ -87,7 +87,7 @@ void Star::generateSphereMesh() {
 
 void Star::setup(const char* texturePath) {
 
-	textureId = loader.loadTexture(texturePath);
+	textureId = loader.loadTexture(texturePath, true);
 	if (textureId != 0)
 		cout << "Star " << name << " Loaded Successfully" << endl;
 

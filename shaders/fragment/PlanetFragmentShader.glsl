@@ -1,34 +1,31 @@
 #version 330 core
 out vec4 FragColor;
 
-in vec2 TexCoord;
+in vec2 TexCoords;
 in vec3 FragPos;
-in vec3 Normal;
+in mat3 TBN;
 
+uniform sampler2D diffuseMap;
+uniform sampler2D normalMap;
 uniform vec3 lightPos;
 uniform vec3 viewPos;
-uniform sampler2D texture1;
+uniform float bumpStrength;
 
-void main()
-{
-    vec3 norm = normalize(Normal);
+void main() {
+    vec3 color = texture(diffuseMap, TexCoords).rgb;
+
+    // Normal mapping
+    vec3 normal = texture(normalMap, TexCoords).rgb;
+    normal = normalize(mix(vec3(0.0, 0.0, 1.0), normal, bumpStrength));
+    normal = normalize(TBN * normal);
+
     vec3 lightDir = normalize(lightPos - FragPos);
+    float diff = max(dot(lightDir, normal), 0.0);
 
-    // diffuse
-    float diff = max(dot(norm, lightDir), 0.0);
-    vec3 diffuse = diff * vec3(1.0); // white light
+    float brightness = 1.2;
 
-    // ambient
-    vec3 ambient = vec3(0.02); // make unlit side darker
+    vec3 diffuse = diff * color;
+    vec3 ambient = 0.1 * color;
 
-    // specular
-    vec3 viewDir = normalize(viewPos - FragPos);
-    vec3 reflectDir = reflect(-lightDir, norm);
-    float spec = pow(max(dot(viewDir, reflectDir), 0.0), 54.0);
-    vec3 specular = 0.5 * spec * vec3(1.0); // white specular highlight
-
-    // combine
-    vec3 objectColor = texture(texture1, TexCoord).rgb;
-    vec3 result = (ambient + diffuse + specular) * objectColor;
-    FragColor = vec4(result, 1.0);
+    FragColor = vec4(brightness * (ambient + diffuse), 1.0);
 }
