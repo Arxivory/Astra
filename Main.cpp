@@ -74,36 +74,36 @@ int main() {
 
     vec3 sunPos(0.0f);
     vec3 sunVel(0.0f);
-    simulator.addStar("Sun", 234.0f, 19890000000.0f, 120600.0f, 100000.0f, 6000.0f, sunPos, sunVel, 0.0f, "textures/sun.jpg");
+    simulator.addStar("Sun", 234.0f, 1989999988.0f, 120600.0f, 100000.0f, 6000.0f, sunPos, sunVel, 0.0f, "textures/sun.jpg");
 
     CelestialObject* sun = simulator.getCelestialObject("Sun");
 
 	vec3 mercuryPos = vec3(38700.0f, 0.0f, 0.0f);
 	vec3 mercuryVel = simulator.calculateOrbitalVelocity(mercuryPos, sun);
-	simulator.addPlanet("Mercury", 0.165f, 0.330f, sun->getMass(), 0.034f, mercuryPos, 4879.0f / 2.0f, mercuryVel, 10.83f, 0.0f, "textures/mercury.jpg", "textures/mercury_normal.jpg");
+	simulator.addPlanet("Mercury", 0.165f, 53000000.0f, sun->getMass(), 0.034f, mercuryPos, 4879.0f / 2.0f, mercuryVel, 10.83f, 0.0f, "textures/mercury.jpg", "textures/mercury_normal.jpg");
 
 	vec3 venusPos = vec3(72300.0f, 0.0f, 0.0f);
 	vec3 venusVel = simulator.calculateOrbitalVelocity(venusPos, sun);
-	simulator.addPlanet("Venus", 0.185f, 4.87f, sun->getMass(), 177.4f, venusPos, 12104.0f / 2.0f, venusVel, -6.52f, 0.0f, "textures/venus.jpg", "textures/mercury_normal.jpg");
+	simulator.addPlanet("Venus", 0.185f, 48700000.0f, sun->getMass(), 177.4f, venusPos, 12104.0f / 2.0f, venusVel, -6.52f, 0.0f, "textures/venus.jpg", "textures/mercury_normal.jpg");
 
 	vec3 earthPos = vec3(100000.0f, 0.0f, 0.0f);
 	vec3 earthVel = simulator.calculateOrbitalVelocity(earthPos, sun);
-	simulator.addPlanet("Earth", 1.0f, 5.97f, sun->getMass(), 23.44f, earthPos, 12742.0f / 2.0f, earthVel, 15.0f, 0.0f, "textures/earth.jpg", "textures/earth_normal.jpg");
+	simulator.addPlanet("Earth", 1.0f, 39700000.0f, sun->getMass(), 23.44f, earthPos, 12742.0f / 2.0f, earthVel, 15.0f, 0.0f, "textures/earth.jpg", "textures/earth_normal.jpg");
 
 	CelestialObject* earth = simulator.getCelestialObject("Earth");
 	vec3 moonPos = earth->getPosition() + vec3(0.0f, 0.0f, 0.6244f * 1000.0f);
 	vec3 moonVel = simulator.calculateOrbitalVelocity(moonPos, earth) + earth->getVelocity();
-	simulator.addPlanet("Moon", 0.165f, 0.073f, earth->getMass(), 6.68f, moonPos, 2974.8f / 2.0f, moonVel, 10.0f, 0.0f, "textures/moon.jpg", "textures/mercury_normal.jpg");
+	simulator.addPlanet("Moon", 0.165f, 9395000.0f, earth->getMass(), 6.68f, moonPos, 2974.8f / 2.0f, moonVel, 10.0f, 0.0f, "textures/moon.jpg", "textures/mercury_normal.jpg");
 
 	vec3 marsPos = vec3(152400.0f, 0.0f, 0.0f);
 	vec3 marsVel = simulator.calculateOrbitalVelocity(marsPos, sun);
-	simulator.addPlanet("Mars", 0.107f, 0.642f, sun->getMass(), 25.19f, marsPos, 6779.0f / 2.0f, marsVel, 14.62f, 0.0f, "textures/mars.jpg", "textures/mercury_normal.jpg");
+	simulator.addPlanet("Mars", 0.107f, 64200000.0f, sun->getMass(), 25.19f, marsPos, 6779.0f / 2.0f, marsVel, 14.62f, 0.0f, "textures/mars.jpg", "textures/mercury_normal.jpg");
 
 	vec3 jupiterPos = vec3(520300.0f, 0.0f, 0.0f);
 	vec3 jupiterVel = simulator.calculateOrbitalVelocity(jupiterPos, sun);
-	simulator.addPlanet("Jupiter", 2.528f, 1898.0f, sun->getMass(), 3.13f, jupiterPos, 139820.0f / 2.0f, jupiterVel, 12.6f, 0.0f, "textures/jupiter.jpg", "textures/mercury_normal.jpg");
+	simulator.addPlanet("Jupiter", 2.528f, 1898000000.0f, sun->getMass(), 3.13f, jupiterPos, 139820.0f / 2.0f, jupiterVel, 12.6f, 0.0f, "textures/jupiter.jpg", "textures/mercury_normal.jpg");
 	
-    float timeFactor = 0.01f;
+    float timeFactor = 5.0f;
 
     while (!glfwWindowShouldClose(window)) {
         float currentFrame = glfwGetTime();
@@ -132,8 +132,8 @@ int main() {
         ImGui::NewFrame();
 
         ImGui::Begin("Simulation Controls");
-        ImGui::SliderFloat("Time Factor", &timeFactor, 0.00000001f, 1.0f, "%.6f");
-        ImGui::SliderFloat("Camera Speed", &controls.cameraSpeed, 1.0f, 4000.0f, "%.1f");
+        ImGui::SliderFloat("Time Factor", &timeFactor, 0.00000001f, 500.0f, "%.6f");
+        ImGui::SliderFloat("Camera Speed", &controls.cameraSpeed, 1.0f, 10000.0f, "%.1f");
 		ImGui::Button("Toggle Trajectory");
 		if (ImGui::IsItemClicked()) {
 			simulator.toggleTrajectory();
