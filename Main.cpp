@@ -118,6 +118,7 @@ int main() {
             (float)controls.getWidth() / (float)controls.getHeight(),
             0.1f, 700000.0f
         );
+
         mat4 view = lookAt(
             controls.getCameraPos(),
             controls.getCameraPos() + controls.getCameraFront(),

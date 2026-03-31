@@ -27,16 +27,16 @@ public:
 
 	void init();
 
-	void setup(const char *texturePath, const char* normalPath);
+	void setup(const char* texturePath, const char* normalPath);
 
-	void render(float currentFrame, float timeFactor, const mat4& view, 
+	void render(float currentFrame, float timeFactor, const mat4& view,
 		const mat4& projection, const vec3& lightPos, const vec3& cameraPos);
 
 	float getSize() { return size; }
 	float getMass() { return mass; }
 
 private:
-	
+
 	float gravity;
 	float mass;
 	float centralMass;
@@ -46,13 +46,13 @@ private:
 	float orbitSpeed;
 	float rotationSpeed;
 	float initialAngle;
-	GLuint textureId, normalMapId;
+	GLuint textureId;
 	vector<float> vertices;
 	vector<unsigned int> indices;
 	GLuint VBO, VAO, EBO;
 	GLuint shaderProgram;
 	Loader loader;
-	
+
 
 };
 
