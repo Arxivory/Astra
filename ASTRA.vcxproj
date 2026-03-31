@@ -192,6 +192,9 @@
     <ClInclude Include="SimulationManager.h" />
     <ClInclude Include="Star.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="glsl shaders\fragment\PlanetFragmentShader.glsl" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

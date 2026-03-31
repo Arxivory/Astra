@@ -156,4 +156,7 @@
       <Filter>Source Files\utils</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="glsl shaders\fragment\PlanetFragmentShader.glsl" />
+  </ItemGroup>
 </Project>

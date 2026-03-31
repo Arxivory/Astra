@@ -153,6 +153,11 @@ void Planet::render(float currentFrame, float timeFactor, const mat4& view,
 	glUniform3fv(glGetUniformLocation(shaderProgram, "lightPos"), 1, value_ptr(lightPos));
 	glUniform3fv(glGetUniformLocation(shaderProgram, "viewPos"), 1, value_ptr(cameraPos));
 
+	glUniform3f(glGetUniformLocation(shaderProgram, "lightColor"), 1.0f, 1.0f, 1.0f);
+	glUniform1f(glGetUniformLocation(shaderProgram, "shininess"), 42.0f);
+	glUniform1f(glGetUniformLocation(shaderProgram, "specularStrength"), 0.5f);
+	glUniform1f(glGetUniformLocation(shaderProgram, "ambientStrength"), 0.1f);
+
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, textureId);
 	glUniform1i(glGetUniformLocation(shaderProgram, "diffuseMap"), 0);
