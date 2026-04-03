@@ -36,6 +36,9 @@ public:
 	float getDeltaTime() const { return deltaTime; }
     float cameraSpeed = 3000.0f;
 
+    //Raycasting
+    vec3 getMouseRayDirection(GLFWwindow* window);
+
 private:
     // Instance methods called by static trampolines
     void handleFramebufferSize(GLFWwindow* window, int width, int height);
@@ -53,6 +56,7 @@ private:
     unsigned int HEIGHT = 720;
     float lastX = WIDTH / 2.0f;
     float lastY = HEIGHT / 2.0f;
+
 };
 
 #endif // !CONTROLS_H

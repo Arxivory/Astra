@@ -16,6 +16,7 @@ private:
 	vector<unique_ptr<CelestialObject>> celestialObjects;
 	PhysicsEngine physics;
 	bool trajectoryVisible = false;
+	CelestialObject* selectedObject = nullptr;
 
 public:
 	void addPlanet(string name, float gravity, float mass, float centralMass, float axialTilt, vec3& initialPosition, float size, vec3& initialVelocity,
@@ -33,6 +34,10 @@ public:
 	CelestialObject* getCelestialObject(const string& name);
 
 	void toggleTrajectory() { trajectoryVisible = !trajectoryVisible; }
+
+	CelestialObject* findSelectedObject(const vec3& rayOrigin, const vec3& rayDir);
+
+	void setSelectedObject(CelestialObject* obj);
 
 };
 

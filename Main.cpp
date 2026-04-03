@@ -125,6 +125,21 @@ int main() {
             controls.getCameraUp()
         );
 
+        static bool wasMouseDown = false;
+        bool isMouseDown = glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS;
+
+        if (isMouseDown && !wasMouseDown && !ImGui::GetIO().WantCaptureMouse) {
+            vec3 rayDir = controls.getMouseRayDirection(window);
+
+            CelestialObject* selected = simulator.findSelectedObject(controls.getCameraPos(), rayDir);
+
+            if (selected) {
+                simulator.setSelectedObject(selected);
+                cout << "Selected: " << selected->getName() << endl;
+            }
+        }
+        wasMouseDown = isMouseDown;
+
         simulator.update(controls.getDeltaTime(), timeFactor);
         simulator.render(view, projection, lightPos, controls.getCameraPos(), timeFactor);
 

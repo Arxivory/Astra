@@ -88,3 +88,21 @@ void Controls::updateDeltaTime(float currentFrame) {
     deltaTime = currentFrame - lastFrame;
     lastFrame = currentFrame;
 }
+
+vec3 Controls::getMouseRayDirection(GLFWwindow* window) {
+    double mouseX, mouseY;
+    glfwGetCursorPos(window, &mouseX, &mouseY);
+    float x = (2.0f * mouseX) / WIDTH - 1.0f;
+    float y = 1.0f - (2.0f * mouseY) / HEIGHT;
+    float z = 1.0f;
+    vec3 rayNDS = vec3(x, y, z);
+    vec4 rayClip = vec4(rayNDS.x, rayNDS.y, -1.0f, 1.0f);
+    mat4 projection = perspective(radians(fov), (float)WIDTH / (float)HEIGHT, 0.1f, 1000.0f);
+    mat4 view = lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
+    mat4 invProj = inverse(projection);
+    mat4 invView = inverse(view);
+    vec4 rayEye = invProj * rayClip;
+    rayEye.z = -1.0f; rayEye.w = 0.0f;
+    vec4 rayWorld = invView * rayEye;
+    return normalize(vec3(rayWorld));
+}

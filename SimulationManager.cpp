@@ -50,3 +50,28 @@ CelestialObject* SimulationManager::getCelestialObject(const string& name) {
 
 	return nullptr;
 }
+
+CelestialObject* SimulationManager::findSelectedObject(const glm::vec3& rayOrigin, const glm::vec3& rayDir) {
+	CelestialObject* closestObject = nullptr;
+	float minDistance = FLT_MAX;
+
+	for (auto& obj : celestialObjects) {
+		glm::vec3 oc = rayOrigin - obj->getPosition();
+		float b = glm::dot(oc, rayDir);
+		float c = glm::dot(oc, oc) - (obj->getRadius() * obj->getRadius());
+		float discriminant = b * b - c;
+
+		if (discriminant > 0) {
+			float t = -b - sqrt(discriminant);
+			if (t > 0 && t < minDistance) {
+				minDistance = t;
+				closestObject = obj.get();
+			}
+		}
+	}
+	return closestObject;
+}
+
+void SimulationManager::setSelectedObject(CelestialObject* obj) {
+	selectedObject = obj;
+}
