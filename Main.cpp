@@ -28,6 +28,24 @@ SimulationManager simulator;
 	8. Logarithmic depth buffer for vast distances.
 */
 
+void renderSelectedObjectInfo(CelestialObject* selected) {
+    ImGui::Begin("Object Telemetry");
+    if (selected) {
+        ImGui::Text("Name: %s", selected->getName().c_str());
+        ImGui::Separator();
+        ImGui::Text("Position: %.2f, %.2f, %.2f", selected->getPosition().x, selected->getPosition().y, selected->getPosition().z);
+        ImGui::Text("Velocity: %.2f km/s", length(selected->getVelocity()));
+
+        if (ImGui::Button("Focus Camera")) {
+            // Implement a camera 'lock' here later!
+        }
+    }
+    else {
+        ImGui::Text("No object selected. Click a celestial object to view data.");
+    }
+    ImGui::End();
+}
+
 int main() {
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -155,6 +173,8 @@ int main() {
 			simulator.toggleTrajectory();
 		}
         ImGui::End();
+
+		renderSelectedObjectInfo(simulator.getSelectedObject());
 
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());

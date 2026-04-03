@@ -39,6 +39,8 @@ public:
 
 	void setSelectedObject(CelestialObject* obj);
 
+	CelestialObject* getSelectedObject() { return selectedObject; }
+
 };
 
 #endif // !SIMULATIONMANAGER_H
