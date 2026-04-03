@@ -29,6 +29,7 @@ vec3 SimulationManager::calculateOrbitalVelocity(const vec3& position, Celestial
 }
 
 void SimulationManager::update(float deltaTime, float timeFactor) {
+	if (ImGuizmo::IsUsing()) return;
 	physics.update(deltaTime * timeFactor);
 }
 

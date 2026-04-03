@@ -10,11 +10,13 @@
 #include "imgui/imgui_impl_glfw.h"
 #include "imgui/imgui_impl_opengl3.h"
 #include "Constants.h"
+#include "GizmoManager.h"
 
 using namespace std;
 using namespace glm;
 
 SimulationManager simulator;
+GizmoManager gizmoManager;
 
 //Reminders:
 /*
@@ -158,7 +160,10 @@ int main() {
         }
         wasMouseDown = isMouseDown;
 
-        simulator.update(controls.getDeltaTime(), timeFactor);
+        if (!gizmoManager.isUsing()) {
+            simulator.update(controls.getDeltaTime(), timeFactor);
+        }
+
         simulator.render(view, projection, lightPos, controls.getCameraPos(), timeFactor);
 
         ImGui_ImplOpenGL3_NewFrame();
@@ -174,6 +179,7 @@ int main() {
 		}
         ImGui::End();
 
+        gizmoManager.update(simulator.getSelectedObject(), view, projection);
 		renderSelectedObjectInfo(simulator.getSelectedObject());
 
         ImGui::Render();

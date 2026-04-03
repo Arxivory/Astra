@@ -10,6 +10,9 @@
 #include <memory>
 #include <vector>
 #include "Constants.h"
+#include "imgui/imgui.h"
+#include "imgui/imgui_internal.h"
+#include "imgui/ImGuizmo.h"
 
 class SimulationManager {
 private:
