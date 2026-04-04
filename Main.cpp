@@ -186,21 +186,11 @@ int main() {
             0.1f, 700000.0f
         );
 
-        mat4 view;
-        if (controls.getFollowTarget()) {
-            view = lookAt(
-                controls.getCameraPos(),
-                controls.getFollowTarget()->getPosition(),
-                controls.getCameraUp()
-            );
-        }
-        else {
-            view = lookAt(
-                controls.getCameraPos(),
-                controls.getCameraPos() + controls.getCameraFront(),
-                controls.getCameraUp()
-            );
-        }
+        mat4 view = lookAt(
+            controls.getCameraPos(),
+            controls.getCameraPos() + controls.getCameraFront(),
+            controls.getCameraUp()
+        );
 
 		worldGrid.render(view, projection);
 
