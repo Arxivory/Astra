@@ -13,6 +13,7 @@
 #include "imgui/imgui.h"
 #include "imgui/imgui_internal.h"
 #include "imgui/ImGuizmo.h"
+#include "Controls.h"
 
 class SimulationManager {
 private:
@@ -43,6 +44,8 @@ public:
 	void setSelectedObject(CelestialObject* obj);
 
 	CelestialObject* getSelectedObject() { return selectedObject; }
+
+	const vector<unique_ptr<CelestialObject>>& getObjects() const { return celestialObjects; }
 
 };
 

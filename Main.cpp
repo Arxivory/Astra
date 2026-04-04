@@ -48,6 +48,25 @@ void renderSelectedObjectInfo(CelestialObject* selected) {
     ImGui::End();
 }
 
+void renderAllLabels(const vector<unique_ptr<CelestialObject>>& objects, const mat4& view, const mat4& projection, unsigned int width, unsigned int height) {
+    ImDrawList* drawList = ImGui::GetBackgroundDrawList();
+    vec4 viewport(0, 0, width, height);
+
+    for (auto& obj : objects) {
+        vec3 screenPos = glm::project(obj->getPosition(), view, projection, viewport);
+        screenPos.y = height - screenPos.y;
+
+        if (screenPos.z < 1.0f) {
+            string label = obj->getName();
+            ImVec2 textPos(screenPos.x + 10, screenPos.y - 10);
+
+            drawList->AddText(ImVec2(textPos.x + 1, textPos.y + 1), IM_COL32(0, 0, 0, 255), label.c_str());
+            drawList->AddText(textPos, IM_COL32(255, 255, 255, 255), label.c_str());
+            drawList->AddLine(ImVec2(screenPos.x, screenPos.y), textPos, IM_COL32(200, 200, 200, 150), 1.0f);
+        }
+    }
+}
+
 int main() {
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -180,6 +199,8 @@ int main() {
 			simulator.toggleTrajectory();
 		}
         ImGui::End();
+
+		renderAllLabels(simulator.getObjects(), view, projection, controls.getWidth(), controls.getHeight());
 
         if (simulator.getSelectedObject()) {
             gizmoManager.update(simulator.getSelectedObject(), view, projection);
