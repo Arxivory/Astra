@@ -38,15 +38,12 @@ void Planet::init() {
 
 void Planet::generateSphereMesh() {
 	int sectorCount = 128, stackCount = sectorCount;
-
 	const float PI = 3.14159265359f;
 	vertices.clear();
 	indices.clear();
 
 	float x, y, z, xy;
-	float lengthInv = 1.0f;
 	float s, t;
-
 	float sectorStep = 2 * PI / sectorCount;
 	float stackStep = PI / stackCount;
 	float sectorAngle, stackAngle;
@@ -56,10 +53,8 @@ void Planet::generateSphereMesh() {
 		xy = cosf(stackAngle);
 		z = sinf(stackAngle);
 
-
 		for (int j = 0; j <= sectorCount; ++j) {
 			sectorAngle = j * sectorStep;
-
 
 			x = xy * cosf(sectorAngle);
 			y = xy * sinf(sectorAngle);
@@ -67,12 +62,20 @@ void Planet::generateSphereMesh() {
 			s = (float)j / sectorCount;
 			t = 1.0f - (float)i / stackCount;
 
+			// 1. Position (3 floats)
 			vertices.push_back(x);
 			vertices.push_back(z);
 			vertices.push_back(y);
 
+			// 2. TexCoords (2 floats)
 			vertices.push_back(s);
 			vertices.push_back(t);
+
+			// 3. Tangent (3 floats) - NEW
+			// For a sphere, the tangent is the derivative with respect to the sector angle
+			vertices.push_back(-sinf(sectorAngle));
+			vertices.push_back(0.0f);
+			vertices.push_back(cosf(sectorAngle));
 		}
 	}
 
@@ -100,6 +103,7 @@ void Planet::generateSphereMesh() {
 void Planet::setup(const char* texturePath, const char* normalPath) {
 
 	textureId = loader.loadTexture(texturePath, true);
+	normalMapId = loader.loadTexture(normalPath, true);
 
 	if (textureId == 0) {
 		cerr << "Error loading texture for Planet: " << name << endl;
@@ -118,11 +122,16 @@ void Planet::setup(const char* texturePath, const char* normalPath) {
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned int), indices.data(), GL_STATIC_DRAW);
 
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+	int stride = 8 * sizeof(float);
+
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, stride, (void*)0);
 	glEnableVertexAttribArray(0);
 
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, stride, (void*)(3 * sizeof(float)));
 	glEnableVertexAttribArray(1);
+
+	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, stride, (void*)(5 * sizeof(float)));
+	glEnableVertexAttribArray(2);
 }
 
 
@@ -161,6 +170,10 @@ void Planet::render(float currentFrame, float timeFactor, const mat4& view,
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, textureId);
 	glUniform1i(glGetUniformLocation(shaderProgram, "diffuseMap"), 0);
+
+	glActiveTexture(GL_TEXTURE1);
+	glBindTexture(GL_TEXTURE_2D, normalMapId);
+	glUniform1i(glGetUniformLocation(shaderProgram, "normalMap"), 1);
 
 	glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
 }

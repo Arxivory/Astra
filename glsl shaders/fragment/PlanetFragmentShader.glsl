@@ -3,44 +3,33 @@ out vec4 FragColor;
 
 in vec2 TexCoords;
 in vec3 FragPos;
-in vec3 Normal;
+in mat3 TBN; // Received from vertex shader
 
 uniform sampler2D diffuseMap;
+uniform sampler2D normalMap;
 uniform vec3 lightPos;
 uniform vec3 viewPos;
-uniform vec3 lightColor;
-uniform float shininess;
-uniform float specularStrength;
-uniform float ambientStrength;
 
 void main() {
+    // 1. Sample Normal Map and transform to [-1, 1] range
+    vec3 normal = texture(normalMap, TexCoords).rgb;
+    normal = normalize(normal * 2.0 - 1.0); 
+    
+    // 2. Transform normal from Tangent Space to World Space
+    vec3 N = normalize(TBN * normal);
+
+    // 3. Lighting Logic (Standard Lambert)
     vec3 color = texture(diffuseMap, TexCoords).rgb;
-
-    // sensible fallbacks if the application hasn't set the uniforms
-    vec3 lc = (length(lightColor) > 0.0) ? lightColor : vec3(1.0);
-    float sh = (shininess > 0.0) ? shininess : 32.0;
-    float sp = (specularStrength > 0.0) ? specularStrength : 0.5;
-    float am = (ambientStrength > 0.0) ? ambientStrength : 0.1;
-
-    vec3 N = normalize(Normal);
     vec3 L = normalize(lightPos - FragPos);
+    float diff = max(dot(L, N), 0.0);
+
+    // 4. Atmospheric Rim (Fresnel)
     vec3 V = normalize(viewPos - FragPos);
+    float rim = pow(1.0 - max(dot(V, N), 0.0), 4.0);
+    vec3 rimColor = vec3(0.4, 0.6, 1.0) * diff; // Blue tint for atmosphere
 
-    // diffuse (Lambert)
-    float diff = max(dot(N, L), 0.0);
-    vec3 diffuse = diff * color * lc;
+    vec3 ambient = 0.05 * color;
+    vec3 finalColor = ambient + (diff * color) + (rim * 0.2);
 
-    // specular (Phong)
-    vec3 R = reflect(-L, N);
-    float spec = 0.0;
-    if (diff > 0.0) {
-        spec = pow(max(dot(R, V), 0.0), sh) * sp;
-    }
-    vec3 specular = spec * lc;
-
-    // ambient
-    vec3 ambient = am * color;
-
-    vec3 result = ambient + diffuse + specular;
-    FragColor = vec4(result, 1.0);
+    FragColor = vec4(finalColor, 1.0);
 }

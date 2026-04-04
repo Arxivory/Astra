@@ -34,12 +34,14 @@ void SimulationManager::update(float deltaTime, float timeFactor) {
 }
 
 void SimulationManager::render(const mat4& view, const mat4& projection, const vec3& lightPos, const vec3& cameraPos, float timeFactor) {
+	CelestialObject* sun = getCelestialObject("Sun");
+	vec3 sunPos = sun ? sun->getPosition() : vec3(0.0f);
 	for (auto& celestialObject : celestialObjects) {
 		if (trajectoryVisible) {
 			celestialObject->updateTrajectory();
 			celestialObject->renderTrajectory(view, projection);
 		}
-		celestialObject->render(0.0f, timeFactor, view, projection, lightPos, cameraPos);
+		celestialObject->render(0.0f, timeFactor, view, projection, sunPos, cameraPos);
 		
 	}
 }
