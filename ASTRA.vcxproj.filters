@@ -108,6 +108,9 @@
     <ClCompile Include="OrbitalGrid.cpp">
       <Filter>Source Files\utils</Filter>
     </ClCompile>
+    <ClCompile Include="Skybox.cpp">
+      <Filter>Source Files\utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="imgui\imconfig.h">
@@ -170,8 +173,13 @@
     <ClInclude Include="OrbitalGrid.h">
       <Filter>Source Files\utils</Filter>
     </ClInclude>
+    <ClInclude Include="Skybox.h">
+      <Filter>Source Files\utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="glsl shaders\fragment\PlanetFragmentShader.glsl" />
+    <None Include="shaders\vertex\SkyboxVertexShader.glsl" />
+    <None Include="shaders\fragment\SkyboxFragmentShader.glsl" />
   </ItemGroup>
 </Project>

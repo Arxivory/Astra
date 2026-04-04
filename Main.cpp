@@ -10,8 +10,10 @@
 #include "imgui/imgui_impl_glfw.h"
 #include "imgui/imgui_impl_opengl3.h"
 #include "Constants.h"
+
 #include "GizmoManager.h"
 #include "OrbitalGrid.h"
+#include "Skybox.h"
 
 using namespace std;
 using namespace glm;
@@ -172,6 +174,9 @@ int main() {
     OrbitalGrid worldGrid(1000000.0f, 500);
     worldGrid.init();
 
+    Skybox skybox("textures/starmap_8k.jpg");
+    skybox.init();
+
     while (!glfwWindowShouldClose(window)) {
         float currentFrame = glfwGetTime();
         controls.updateDeltaTime(currentFrame);
@@ -192,6 +197,7 @@ int main() {
             controls.getCameraUp()
         );
 
+		skybox.render(view, projection, controls.getCameraPos());
 		worldGrid.render(view, projection);
 
         static bool wasMouseDown = false;

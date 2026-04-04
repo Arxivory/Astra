@@ -173,6 +173,7 @@
     <ClCompile Include="Planet.cpp" />
     <ClCompile Include="Simulation.cpp" />
     <ClCompile Include="SimulationManager.cpp" />
+    <ClCompile Include="Skybox.cpp" />
     <ClCompile Include="Star.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -195,10 +196,13 @@
     <ClInclude Include="PhysicsEngine.h" />
     <ClInclude Include="Planet.h" />
     <ClInclude Include="SimulationManager.h" />
+    <ClInclude Include="Skybox.h" />
     <ClInclude Include="Star.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="glsl shaders\fragment\PlanetFragmentShader.glsl" />
+    <None Include="shaders\fragment\SkyboxFragmentShader.glsl" />
+    <None Include="shaders\vertex\SkyboxVertexShader.glsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
