@@ -157,12 +157,14 @@ int main() {
                 simulator.setSelectedObject(selected);
                 cout << "Selected: " << selected->getName() << endl;
             }
+            else {
+                simulator.setSelectedObject(nullptr);
+				cout << "No object selected." << endl;
+            }
         }
         wasMouseDown = isMouseDown;
 
-        if (!gizmoManager.isUsing()) {
-            simulator.update(controls.getDeltaTime(), timeFactor);
-        }
+        simulator.update(controls.getDeltaTime(), timeFactor);
 
         simulator.render(view, projection, lightPos, controls.getCameraPos(), timeFactor);
 
@@ -179,7 +181,29 @@ int main() {
 		}
         ImGui::End();
 
-        gizmoManager.update(simulator.getSelectedObject(), view, projection);
+        if (simulator.getSelectedObject()) {
+            gizmoManager.update(simulator.getSelectedObject(), view, projection);
+
+            if (gizmoManager.isUsing()) {
+                vec3 zeroVel(0.0f);
+                simulator.getSelectedObject()->setVelocity(zeroVel);
+            }
+
+            static bool wasUsingGizmo = false;
+            if (!gizmoManager.isUsing() && wasUsingGizmo) {
+                CelestialObject* sun = simulator.getCelestialObject("Sun");
+                if (sun && simulator.getSelectedObject() != sun) {
+                    vec3 newOrbitVel = simulator.calculateOrbitalVelocity(simulator.getSelectedObject()->getPosition(), sun);
+                    simulator.getSelectedObject()->setVelocity(newOrbitVel);
+                }
+            }
+            wasUsingGizmo = gizmoManager.isUsing();
+        }
+
+        if (gizmoManager.isUsing() && simulator.getSelectedObject()) {
+            vec3 zeroVelocity(0.0f);
+            simulator.getSelectedObject()->setVelocity(zeroVelocity);
+        }
 		renderSelectedObjectInfo(simulator.getSelectedObject());
 
         ImGui::Render();
