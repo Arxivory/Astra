@@ -13,17 +13,25 @@ void OrbitalGrid::setupShaders() {
     const char* vShader = R"(
         #version 330 core
         layout (location = 0) in vec3 aPos;
+        uniform mat4 model;
         uniform mat4 view;
         uniform mat4 projection;
+        out vec3 fragWorldPos;
         void main() {
-            gl_Position = projection * view * vec4(aPos, 1.0);
+            fragWorldPos = aPos;
+            gl_Position = projection * view * model * vec4(aPos, 1.0);
         }
     )";
 
     const char* fShader = R"(
         #version 330 core
+        in vec3 fragWorldPos;
         out vec4 FragColor;
+        uniform float gridSize;
+
         void main() {
+            float dist = length(fragWorldPos.xz);
+        
             FragColor = vec4(0.3, 0.3, 0.3, 0.4);
         }
     )";
@@ -70,9 +78,17 @@ void OrbitalGrid::init() {
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
 }
-
-void OrbitalGrid::render(const glm::mat4& view, const glm::mat4& projection) {
+void OrbitalGrid::render(const glm::mat4& view, const glm::mat4& projection, const glm::vec3& cameraPos) {
     glUseProgram(shaderProgram);
+
+    float step = size / divisions;
+
+    float offsetX = fmod(cameraPos.x, step);
+    float offsetZ = fmod(cameraPos.z, step);
+
+    glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(-offsetX, -cameraPos.y, -offsetZ));
+
+    glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "model"), 1, GL_FALSE, glm::value_ptr(model));
     glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "view"), 1, GL_FALSE, glm::value_ptr(view));
     glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
 

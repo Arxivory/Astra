@@ -150,17 +150,21 @@ void Planet::render(float currentFrame, float timeFactor, const mat4& view,
 
 	glBindVertexArray(VAO);
 
-	model = translate(model, position);
+	vec3 relativePos = position - cameraPos;
+	model = translate(model, relativePos);
+
 	model = rotate(model, radians(axialTilt), vec3(1.0f, 0.0f, 0.0f));
 	model = scale(model, vec3(radius));
 
+	glUniform3f(glGetUniformLocation(shaderProgram, "viewPos"), 0.0f, 0.0f, 0.0f);
+	vec3 relativeLightPos = lightPos - cameraPos;
+	glUniform3fv(glGetUniformLocation(shaderProgram, "lightPos"), 1, value_ptr(relativeLightPos));
 
 	glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "model"), 1, GL_FALSE, value_ptr(model));
 
 	glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "projection"), 1, GL_FALSE, value_ptr(projection));
 	glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "view"), 1, GL_FALSE, value_ptr(view));
-	glUniform3fv(glGetUniformLocation(shaderProgram, "lightPos"), 1, value_ptr(lightPos));
-	glUniform3fv(glGetUniformLocation(shaderProgram, "viewPos"), 1, value_ptr(cameraPos));
+	
 
 	glUniform3f(glGetUniformLocation(shaderProgram, "lightColor"), 1.0f, 1.0f, 1.0f);
 	glUniform1f(glGetUniformLocation(shaderProgram, "shininess"), 42.0f);

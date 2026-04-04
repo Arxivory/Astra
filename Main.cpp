@@ -48,15 +48,16 @@ void renderSelectedObjectInfo(CelestialObject* selected, Controls& controls) {
     ImGui::End();
 }
 
-void renderAllLabels(const vector<unique_ptr<CelestialObject>>& objects, const mat4& view, const mat4& projection, unsigned int width, unsigned int height) {
+void renderAllLabels(const vector<unique_ptr<CelestialObject>>& objects, const mat4& view, const mat4& projection, const vec3& cameraPos,unsigned int width, unsigned int height) {
     ImDrawList* drawList = ImGui::GetBackgroundDrawList();
     vec4 viewport(0, 0, width, height);
 
     for (auto& obj : objects) {
-        vec3 screenPos = glm::project(obj->getPosition(), view, projection, viewport);
+        vec3 relativePos = obj->getPosition() - cameraPos;
+        vec3 screenPos = glm::project(relativePos, view, projection, viewport);
         screenPos.y = height - screenPos.y;
 
-        if (screenPos.z < 1.0f) {
+        if (screenPos.z < 1.0f && screenPos.z > 0.0f) {
             string label = obj->getName();
             ImVec2 textPos(screenPos.x + 10, screenPos.y - 10);
 
@@ -193,13 +194,13 @@ int main() {
         );
 
         mat4 view = lookAt(
-            controls.getCameraPos(),
-            controls.getCameraPos() + controls.getCameraFront(),
+            vec3(0.0f),
+            controls.getCameraFront(),
             controls.getCameraUp()
         );
 
 		skybox.render(view, projection, controls.getCameraPos());
-        if (showGrid) worldGrid.render(view, projection);
+        if (showGrid) worldGrid.render(view, projection, controls.getCameraPos());
 
         static bool wasMouseDown = false;
         bool isMouseDown = glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS;
@@ -242,10 +243,10 @@ int main() {
         ImGui::End();
 
 
-		renderAllLabels(simulator.getObjects(), view, projection, controls.getWidth(), controls.getHeight());
+		renderAllLabels(simulator.getObjects(), view, projection, controls.getCameraPos(), controls.getWidth(), controls.getHeight());
 
         if (simulator.getSelectedObject()) {
-            gizmoManager.update(simulator.getSelectedObject(), view, projection);
+            gizmoManager.update(simulator.getSelectedObject(), view, projection, controls.getCameraPos());
 
             if (gizmoManager.isUsing()) {
                 vec3 zeroVel(0.0f);

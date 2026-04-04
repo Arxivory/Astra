@@ -46,7 +46,7 @@ public:
 		const mat4& projection, const vec3& lightPos, const vec3& cameraPos) = 0;
 
 	void updateTrajectory();
-	void renderTrajectory(const mat4& view, const mat4& projection);
+	void renderTrajectory(const mat4& view, const mat4& projection, const vec3& cameraPos);
 
 protected:
 	string name;

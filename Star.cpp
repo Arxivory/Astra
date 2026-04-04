@@ -123,7 +123,8 @@ void Star::render(float currentFrame, float timeFactor, const mat4& view,
 	float angularVelocity = 2.97e-6f; 
 
 	float angle = angularVelocity * currentFrame * timeFactor;
-	model = translate(model, position);
+	vec3 relativePos = position - cameraPos;
+	model = translate(model, relativePos);
 	model = rotate(model, angle, vec3(0.0f, 1.0f, 0.0f));
 	model = scale(model, vec3(radius));
 
@@ -131,7 +132,7 @@ void Star::render(float currentFrame, float timeFactor, const mat4& view,
 
 	glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "projection"), 1, GL_FALSE, value_ptr(projection));
 	glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "view"), 1, GL_FALSE, value_ptr(view));
-	glUniform3fv(glGetUniformLocation(shaderProgram, "viewPos"), 1, value_ptr(cameraPos));
+	glUniform3f(glGetUniformLocation(shaderProgram, "viewPos"), 0.0f, 0.0f, 0.0f);
 
 	glUniform1f(glGetUniformLocation(shaderProgram, "luminosity"), luminosity);
 	glUniform1f(glGetUniformLocation(shaderProgram, "temperature"), temperature);

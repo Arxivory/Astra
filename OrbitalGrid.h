@@ -11,7 +11,7 @@ public:
     ~OrbitalGrid();
 
     void init();
-    void render(const glm::mat4& view, const glm::mat4& projection);
+    void render(const glm::mat4& view, const glm::mat4& projection, const glm::vec3& cameraPos);
 
 private:
     GLuint VAO, VBO;

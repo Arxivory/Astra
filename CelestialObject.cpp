@@ -31,10 +31,11 @@ void CelestialObject::setupTrajectoryShaders() {
 	const char* vertexShaderSource = R"(
         #version 330 core
         layout (location = 0) in vec3 aPos;
+		uniform mat4 model;
         uniform mat4 view;
         uniform mat4 projection;
         void main() {
-            gl_Position = projection * view * vec4(aPos, 1.0);
+            gl_Position = projection * view * model * vec4(aPos, 1.0);
         }
     )";
 
@@ -83,7 +84,7 @@ void CelestialObject::updateTrajectory() {
 	}
 }
 
-void CelestialObject::renderTrajectory(const mat4& view, const mat4& projection) {
+void CelestialObject::renderTrajectory(const mat4& view, const mat4& projection, const vec3& cameraPos) {
 	if (trajectoryPoints.size() < 2) return;
 
 	glUseProgram(trajectoryShaderProgram);
@@ -93,6 +94,9 @@ void CelestialObject::renderTrajectory(const mat4& view, const mat4& projection)
 	glBufferData(GL_ARRAY_BUFFER, trajectoryPoints.size() * 3 * sizeof(float),
 		trajectoryPoints.data(), GL_DYNAMIC_DRAW);
 
+	mat4 model = translate(mat4(1.0f), -cameraPos);
+
+	glUniformMatrix4fv(glGetUniformLocation(trajectoryShaderProgram, "model"), 1, GL_FALSE, value_ptr(model));
 	glUniformMatrix4fv(glGetUniformLocation(trajectoryShaderProgram, "view"), 1, GL_FALSE, value_ptr(view));
 	glUniformMatrix4fv(glGetUniformLocation(trajectoryShaderProgram, "projection"), 1, GL_FALSE, value_ptr(projection));
 

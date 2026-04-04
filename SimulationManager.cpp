@@ -39,7 +39,7 @@ void SimulationManager::render(const mat4& view, const mat4& projection, const v
 	for (auto& celestialObject : celestialObjects) {
 		if (trajectoryVisible) {
 			celestialObject->updateTrajectory();
-			celestialObject->renderTrajectory(view, projection);
+			celestialObject->renderTrajectory(view, projection, cameraPos);
 		}
 		celestialObject->render(0.0f, timeFactor, view, projection, sunPos, cameraPos);
 		
