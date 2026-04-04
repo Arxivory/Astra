@@ -31,7 +31,7 @@ GizmoManager gizmoManager;
 	8. Logarithmic depth buffer for vast distances.
 */
 
-void renderSelectedObjectInfo(CelestialObject* selected, Controls controls) {
+void renderSelectedObjectInfo(CelestialObject* selected, Controls& controls) {
     ImGui::Begin("Object Telemetry");
     if (selected) {
         ImGui::Text("Name: %s", selected->getName().c_str());
