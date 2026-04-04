@@ -20,6 +20,7 @@ using namespace glm;
 
 SimulationManager simulator;
 GizmoManager gizmoManager;
+bool showGrid = false;
 
 //Reminders:
 /*
@@ -198,7 +199,7 @@ int main() {
         );
 
 		skybox.render(view, projection, controls.getCameraPos());
-		worldGrid.render(view, projection);
+        if (showGrid) worldGrid.render(view, projection);
 
         static bool wasMouseDown = false;
         bool isMouseDown = glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS;
@@ -234,7 +235,12 @@ int main() {
 		if (ImGui::IsItemClicked()) {
 			simulator.toggleTrajectory();
 		}
+        ImGui::Button("Toggle Orbital Grid");
+		if (ImGui::IsItemClicked()) {
+			showGrid = !showGrid;
+		}
         ImGui::End();
+
 
 		renderAllLabels(simulator.getObjects(), view, projection, controls.getWidth(), controls.getHeight());
 
