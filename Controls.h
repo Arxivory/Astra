@@ -8,6 +8,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <iostream>
+#include "CelestialObject.h"
 
 using namespace std;
 using namespace glm;
@@ -38,6 +39,8 @@ public:
 
     //Raycasting
     vec3 getMouseRayDirection(GLFWwindow* window);
+    void setFollowTarget(CelestialObject* target) { followTarget = target; }
+    CelestialObject* getFollowTarget() { return followTarget; }
 
 private:
     // Instance methods called by static trampolines
@@ -56,7 +59,8 @@ private:
     unsigned int HEIGHT = 720;
     float lastX = WIDTH / 2.0f;
     float lastY = HEIGHT / 2.0f;
-
+    CelestialObject* followTarget = nullptr;
+	vec3 followOffset = vec3(0.0f, 0.0f, 100.0f);
 };
 
 #endif // !CONTROLS_H

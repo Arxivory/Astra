@@ -30,17 +30,13 @@ GizmoManager gizmoManager;
 	8. Logarithmic depth buffer for vast distances.
 */
 
-void renderSelectedObjectInfo(CelestialObject* selected) {
+void renderSelectedObjectInfo(CelestialObject* selected, Controls controls) {
     ImGui::Begin("Object Telemetry");
     if (selected) {
         ImGui::Text("Name: %s", selected->getName().c_str());
         ImGui::Separator();
         ImGui::Text("Position: %.2f, %.2f, %.2f", selected->getPosition().x, selected->getPosition().y, selected->getPosition().z);
         ImGui::Text("Velocity: %.2f km/s", length(selected->getVelocity()));
-
-        if (ImGui::Button("Focus Camera")) {
-            // Implement a camera 'lock' here later!
-        }
     }
     else {
         ImGui::Text("No object selected. Click a celestial object to view data.");
@@ -65,6 +61,34 @@ void renderAllLabels(const vector<unique_ptr<CelestialObject>>& objects, const m
             drawList->AddLine(ImVec2(screenPos.x, screenPos.y), textPos, IM_COL32(200, 200, 200, 150), 1.0f);
         }
     }
+}
+
+void renderSystemNavigator(SimulationManager& sim, Controls& controls) {
+    ImGui::Begin("System Navigator");
+    const auto& objects = sim.getObjects();
+
+    for (auto& obj : objects) {
+        bool isSelected = (sim.getSelectedObject() == obj.get());
+
+        if (ImGui::Selectable(obj->getName().c_str(), isSelected)) {
+            sim.setSelectedObject(obj.get());
+        }
+
+        ImGui::SameLine(ImGui::GetWindowWidth() - 70);
+        string btnLabel = "Focus##" + obj->getName();
+
+        if (ImGui::Button(btnLabel.c_str())) {
+            sim.setSelectedObject(obj.get());
+            controls.setFollowTarget(obj.get());
+        }
+    }
+
+    ImGui::Separator();
+    if (ImGui::Button("Release Camera Focus", ImVec2(-FLT_MIN, 0))) {
+        controls.setFollowTarget(nullptr);
+    }
+
+    ImGui::End();
 }
 
 int main() {
@@ -158,11 +182,21 @@ int main() {
             0.1f, 700000.0f
         );
 
-        mat4 view = lookAt(
-            controls.getCameraPos(),
-            controls.getCameraPos() + controls.getCameraFront(),
-            controls.getCameraUp()
-        );
+        mat4 view;
+        if (controls.getFollowTarget()) {
+            view = lookAt(
+                controls.getCameraPos(),
+                controls.getFollowTarget()->getPosition(),
+                controls.getCameraUp()
+            );
+        }
+        else {
+            view = lookAt(
+                controls.getCameraPos(),
+                controls.getCameraPos() + controls.getCameraFront(),
+                controls.getCameraUp()
+            );
+        }
 
         static bool wasMouseDown = false;
         bool isMouseDown = glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS;
@@ -225,7 +259,8 @@ int main() {
             vec3 zeroVelocity(0.0f);
             simulator.getSelectedObject()->setVelocity(zeroVelocity);
         }
-		renderSelectedObjectInfo(simulator.getSelectedObject());
+		renderSelectedObjectInfo(simulator.getSelectedObject(), controls);
+		renderSystemNavigator(simulator, controls);
 
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());

@@ -75,13 +75,20 @@ void Controls::handleMouseButton(GLFWwindow* window, int button, int action, int
 }
 
 void Controls::processInput(GLFWwindow* window) {
+    if (followTarget) {
+        cameraPos = followTarget->getPosition() + followOffset;
+    }
     float speed = cameraSpeed * deltaTime;
-    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) cameraPos += speed * cameraFront;
-    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) cameraPos -= speed * cameraFront;
-    if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * speed;
-    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * speed;
+
+    bool moving = false;
+    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) { cameraPos += speed * cameraFront; moving = true; }
+    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) { cameraPos -= speed * cameraFront; moving = true; }
+    if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) { cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * speed; moving = true; }
+    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) { cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * speed; moving = true; }
     if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS && fov < 55.0f) fov = fov + 0.01f;
     if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS && fov > 1.0f) fov = fov - 0.01f;
+
+	if (moving) followTarget = nullptr;
 }
 
 void Controls::updateDeltaTime(float currentFrame) {
