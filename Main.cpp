@@ -89,6 +89,8 @@ void renderSystemNavigator(SimulationManager& sim, Controls& controls) {
     }
 
     ImGui::Separator();
+	ImGui::Text("Click the Button below or move around");
+    ImGui::Text("using WASD to release focus");
     if (ImGui::Button("Release Camera Focus", ImVec2(-FLT_MIN, 0))) {
         controls.setFollowTarget(nullptr);
     }
