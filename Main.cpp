@@ -11,6 +11,7 @@
 #include "imgui/imgui_impl_opengl3.h"
 #include "Constants.h"
 #include "GizmoManager.h"
+#include "OrbitalGrid.h"
 
 using namespace std;
 using namespace glm;
@@ -168,6 +169,9 @@ int main() {
 	
     float timeFactor = 5.0f;
 
+    OrbitalGrid worldGrid(1000000.0f, 500);
+    worldGrid.init();
+
     while (!glfwWindowShouldClose(window)) {
         float currentFrame = glfwGetTime();
         controls.updateDeltaTime(currentFrame);
@@ -198,12 +202,14 @@ int main() {
             );
         }
 
+		worldGrid.render(view, projection);
+
         static bool wasMouseDown = false;
         bool isMouseDown = glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS;
 
         if (isMouseDown && !wasMouseDown && !ImGui::GetIO().WantCaptureMouse) {
             vec3 rayDir = controls.getMouseRayDirection(window);
-
+            
             CelestialObject* selected = simulator.findSelectedObject(controls.getCameraPos(), rayDir);
 
             if (selected) {

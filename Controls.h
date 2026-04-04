@@ -41,6 +41,7 @@ public:
     vec3 getMouseRayDirection(GLFWwindow* window);
     void setFollowTarget(CelestialObject* target) { followTarget = target; }
     CelestialObject* getFollowTarget() { return followTarget; }
+    void setFollowOffset(const vec3& offset) { followOffset = offset; }
 
 private:
     // Instance methods called by static trampolines
@@ -60,7 +61,8 @@ private:
     float lastX = WIDTH / 2.0f;
     float lastY = HEIGHT / 2.0f;
     CelestialObject* followTarget = nullptr;
-	vec3 followOffset = vec3(0.0f, 0.0f, 100.0f);
+	vec3 followOffset = vec3(0.0f, 500.0f, 2000.0f);
+    float lerpSpeed = 5.0f;
 };
 
 #endif // !CONTROLS_H

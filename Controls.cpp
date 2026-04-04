@@ -76,7 +76,8 @@ void Controls::handleMouseButton(GLFWwindow* window, int button, int action, int
 
 void Controls::processInput(GLFWwindow* window) {
     if (followTarget) {
-        cameraPos = followTarget->getPosition() + followOffset;
+        vec3 desiredPos = followTarget->getPosition() + followOffset;
+        cameraPos = glm::mix(cameraPos, desiredPos, lerpSpeed * deltaTime);
     }
     float speed = cameraSpeed * deltaTime;
 
