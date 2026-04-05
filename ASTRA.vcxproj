@@ -201,6 +201,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="glsl shaders\fragment\PlanetFragmentShader.glsl" />
+    <None Include="README.md">
+      <SubType>
+      </SubType>
+    </None>
     <None Include="shaders\fragment\SkyboxFragmentShader.glsl" />
     <None Include="shaders\vertex\SkyboxVertexShader.glsl" />
   </ItemGroup>

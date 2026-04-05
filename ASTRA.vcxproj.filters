@@ -181,5 +181,6 @@
     <None Include="glsl shaders\fragment\PlanetFragmentShader.glsl" />
     <None Include="shaders\vertex\SkyboxVertexShader.glsl" />
     <None Include="shaders\fragment\SkyboxFragmentShader.glsl" />
+    <None Include="README.md" />
   </ItemGroup>
 </Project>
